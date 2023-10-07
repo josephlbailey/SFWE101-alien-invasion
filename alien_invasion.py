@@ -13,7 +13,10 @@ class AlienInvasion:
         # Initialize the game, and create game resources
         pygame.init()
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        # TODO: Replace this with pygame.FULLSCREEN before submitting the final version
+        self.screen = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Joseph\'s Alien Invasion")
 
         self.ship = Ship(self)
@@ -37,16 +40,27 @@ class AlienInvasion:
                 sys.exit()
             # Did the player press a key?
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = True
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = True
+                self._check_keydown_events(event)
             # Did the player release a key?
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = False
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = False
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        # Is the key the right arrow or is it the left arrow?
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        # Did the player hit the Q key to quit the game?
+        elif event.key == pygame.K_q:
+            sys.exit()
+
+    def _check_keyup_events(self, event):
+        # Did the player stop holding down either arrow key?
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
 
     def _update_screen(self):
         # Redraw the screen each pass through the loop
