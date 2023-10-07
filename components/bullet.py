@@ -1,6 +1,6 @@
 import pygame
 
-# When you use sprites you can group related elements in your game and act on all the grouped elements at once
+# When you use components you can group related elements in your game and act on all the grouped elements at once
 from pygame.sprite import Sprite
 
 
