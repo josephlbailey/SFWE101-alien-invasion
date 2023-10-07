@@ -9,19 +9,19 @@ class Settings:
         self.bg_color = (0, 17, 51)
 
         # Ship settings
-        self.ship_speed = 2.5
+        self.ship_speed = 10.0
         self.ship_limit = 3
 
         # Bullet settings
         # Bullets travel slower than the ship
-        self.bullet_speed = 1.5
+        self.bullet_speed = 15.0
         # Bullets are 3 pixels wide
         self.bullet_width = 3
         # Bullets are 15 pixels high
         self.bullet_height = 15
         # Bullets are dark grey
-        self.bullet_color = (60, 60, 60)
-        self.bullets_allowed = 3
+        self.bullet_color = (245, 245, 245)
+        self.bullets_allowed = 6
 
         # Alien settings
         self.alien_speed = 1.0
