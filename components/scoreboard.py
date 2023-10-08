@@ -17,6 +17,7 @@ class ScoreBoard:
         self._draw_scores(new_stats)
 
     def _draw_bg(self):
+        """ Draw the gradient background on which the score will be displayed """
         scoreboard_bg = Surface((2, 2))
         draw.line(scoreboard_bg, (0, 0, 0), (0, 0), (0, 1))
         draw.line(scoreboard_bg, self.settings.bg_color, (1, 0), (1, 1))
@@ -28,21 +29,21 @@ class ScoreBoard:
         self.screen.blit(scoreboard_bg, self.scoreboard_bg_rect)
 
     def _draw_scores(self, stats):
+        """ Draw the score and ships remaining """
         # Create the font instance used to render the score text
         text = Font(None, 30)
         scoreboard_label_text = f'Aliens eliminated: {stats.aliens_eliminated_total}'
-        label = text.render(scoreboard_label_text, 1, self.settings.gameboard_text_color)
+        label = text.render(scoreboard_label_text, 1, self.settings.game_board_text_color)
 
-        # label_rect = self.scoreboard_bg_rect.copy()
-        label_rect = self.scoreboard_bg_rect.copy()
+        label_rect = self.scoreboard_bg_rect
         label_rect.x += 15
         label_rect.y += 10
 
         # Draw the first line of the scoreboard text
         self.screen.blit(label, label_rect)
 
-        scoreboard_label_text = f'Ships remaining: {stats.ships_left}'
-        label = text.render(scoreboard_label_text, 1, self.settings.gameboard_text_color)
+        scoreboard_label_text = f'Ships remaining: {stats.remaining_ships}'
+        label = text.render(scoreboard_label_text, 1, self.settings.game_board_text_color)
 
         label_rect.y += 25
 

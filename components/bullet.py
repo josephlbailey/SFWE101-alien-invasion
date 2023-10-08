@@ -5,6 +5,7 @@ from pygame.sprite import Sprite
 
 
 class Bullet(Sprite):
+    """ Class to manage operations on the bullet sprite """
 
     def __init__(self, ai_game):
         super().__init__()
@@ -20,6 +21,7 @@ class Bullet(Sprite):
         self.y = float(self.rect.y)
 
     def update(self):
+        """ Update the bullet's y position on the game board """
         # Move the bullet up the screen
         # Update the decimal point of the bullet.
         self.y -= self.settings.bullet_speed

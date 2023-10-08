@@ -4,7 +4,7 @@ class Settings:
     def __init__(self):
         """ Initialise the game settings """
         # Screen settings
-        self.gameboard_text_color = (255, 255, 255)
+        self.game_board_text_color = (255, 255, 255)
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (0, 17, 51)

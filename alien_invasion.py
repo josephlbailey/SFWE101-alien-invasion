@@ -105,7 +105,6 @@ class AlienInvasion:
         if not self.aliens:
             # Make the aliens slightly faster each level
             self.settings.alien_speed *= 1.15
-            self.stats.new_level()
             self.bullets.empty()
             self._create_fleet()
 
@@ -160,8 +159,8 @@ class AlienInvasion:
 
     def _ship_hit(self):
 
-        if self.stats.ships_left > 0:
-            self.stats.ships_left -= 1
+        if self.stats.remaining_ships > 0:
+            self.stats.remaining_ships -= 1
 
             self.aliens.empty()
             self.bullets.empty()
