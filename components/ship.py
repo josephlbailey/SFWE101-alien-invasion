@@ -15,6 +15,7 @@ class Ship:
 
         # Start each new ship at the bottom of the center of the screen
         self.rect.midbottom = self.screen_rect.midbottom
+        self.rect.y -= 75
 
         # Store a decimal value for the ship's horizontal position
         self.x = float(self.rect.x)
@@ -42,3 +43,5 @@ class Ship:
     def center_ship(self):
         """ Center the ship on the screen """
         self.rect.midbottom = self.screen_rect.midbottom
+        self.x = self.rect.x
+        self.rect.y -= 75
