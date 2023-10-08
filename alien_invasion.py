@@ -126,8 +126,6 @@ class AlienInvasion:
             for alien_number in range(alien_count):
                 self._create_alien(alien_number, row_number)
 
-        self.stats.initial_alien_count = len(self.aliens)
-
     def _create_alien(self, alien_number, row_number):
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
