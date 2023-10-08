@@ -6,6 +6,7 @@ import pygame
 from components.alien import Alien
 from components.bullet import Bullet
 from components.gamestats import GameStats
+from components.scoreboard import ScoreBoard
 from components.ship import Ship
 from config.settings import Settings
 
@@ -17,13 +18,14 @@ class AlienInvasion:
         # Initialize the game, and create game resources
         pygame.init()
         self.settings = Settings()
-        # TODO: Replace this with pygame.FULLSCREEN before submitting the final version
         self.screen = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Joseph\'s Alien Invasion")
 
         self.stats = GameStats(self)
+
+        self.scoreboard = ScoreBoard(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -97,7 +99,13 @@ class AlienInvasion:
 
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
+        self.stats.aliens_eliminated_total += len(collisions.values())
+
+        # All aliens have been eliminated, new level
         if not self.aliens:
+            # Make the aliens slightly faster each level
+            self.settings.alien_speed *= 1.15
+            self.stats.new_level()
             self.bullets.empty()
             self._create_fleet()
 
@@ -113,11 +121,13 @@ class AlienInvasion:
 
         ship_height = self.ship.rect.height
         available_space_y = (self.settings.screen_height - (3 * alien_height) - ship_height)
-        row_count = available_space_y // (2 * alien_height)
+        row_count = min(available_space_y // (2 * alien_height), 5)
 
         for row_number in range(row_count):
             for alien_number in range(alien_count):
                 self._create_alien(alien_number, row_number)
+
+        self.stats.initial_alien_count = len(self.aliens)
 
     def _create_alien(self, alien_number, row_number):
         alien = Alien(self)
@@ -145,7 +155,8 @@ class AlienInvasion:
 
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
-            self._check_aliens_bottom()
+
+        self._check_aliens_bottom()
 
     def _ship_hit(self):
 
@@ -178,6 +189,7 @@ class AlienInvasion:
         # Make the most recently drawn screen visible
 
         self.aliens.draw(self.screen)
+        self.scoreboard.update_score(self.stats)
         pygame.display.flip()
 
 
